@@ -12,13 +12,11 @@ pipeline {
                 }
             }
         }
-        stage("build") {
-            steps {
-                script {
-                    gv.buildApp()
-                }
-            }
-        }
+        stage("Build") {
+		steps {
+			ssh 'docker-compose build web'
+			}
+			}
         stage("test") {
             when {
                 expression {
@@ -33,10 +31,9 @@ pipeline {
         }
         stage("deploy") {
             steps {
-                script {
-                    gv.deployApp()
+                sh "docker-compose up -d"
                 }
             }
         }
     }
-}
+
