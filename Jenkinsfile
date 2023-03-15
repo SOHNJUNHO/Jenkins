@@ -12,11 +12,16 @@ pipeline {
                 }
             }
         }
+        stage("Checkout") {
+            steps{
+                checkout scm
+            }
+        }
         stage("Build") {
-		steps {
-			ssh 'docker-compose build web'
-			}
-			}
+                steps {
+                        sh 'docker-compose build web'
+                        }
+                        }
         stage("test") {
             when {
                 expression {
@@ -36,4 +41,5 @@ pipeline {
             }
         }
     }
+
 
